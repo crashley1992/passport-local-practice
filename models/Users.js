@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
-const { Schema } = mongoose;
+const Schema = mongoose.Schema;
 
 const UsersSchema = new Schema({
   email: String,
@@ -40,4 +40,6 @@ UsersSchema.methods.toAuthJSON = function() {
   };
 };
 
-mongoose.model('Users', UsersSchema);
+const Users = mongoose.model('Users', UsersSchema);
+
+module.exports = Users

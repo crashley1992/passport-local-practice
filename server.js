@@ -6,8 +6,6 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const errorHandler = require('errorhandler');
 
-const routes = require('./routes');
-
 //Configure mongoose's promise to global promise
 mongoose.promise = global.Promise;
 
@@ -30,12 +28,19 @@ if(!isProduction) {
 }
 
 //Configure Mongoose
-mongoose.connect("mongodb://localhost/passport-tutorial", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/passport-tutorial", { useNewUrlParser: true }, (err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('connected to DB');
+    require('./models/Users');
+  }
+});
 
 
 //models and routes
-require('./models/Users');
 require('./config/passport');
+const routes = require('./routes');
 app.use(routes);
 
 //Error handlers & middlewares
